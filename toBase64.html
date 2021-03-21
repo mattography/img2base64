@@ -1,0 +1,39 @@
+<html>
+<input id="inputFileToLoad" type="file" onchange="encodeImageFileAsURL()"/>
+<div class="converterwrapper">
+    <div id="imgTest" style="width: 300px; height: auto"></div>
+    <div id="base64"></div>
+</div>
+<style>
+.converterwrapper{
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+img{
+    max-width: 300px;
+    height: auto;
+}
+#base64 {
+    max-width: 300px;
+}
+</style>
+<script type="text/javascript">
+function encodeImageFileAsURL() {
+    var fileSelected = document.getElementById("inputFileToLoad").files;
+    if(fileSelected.length > 0){
+        var fileToLoad = fileSelected[0];
+        var fileReader = new FileReader();
+        fileReader.onload = function(fileLoadedEvent){
+            var srcData = fileLoadedEvent.target.result;
+
+            var newImage = document.createElement('img');
+            newImage.src = srcData;
+            document.getElementById("imgTest").innerHTML = newImage.outerHTML;
+            document.getElementById("base64").innerHTML = newImage.src;
+        }
+        fileReader.readAsDataURL(fileToLoad);
+    }
+}
+</script>
+</html>
